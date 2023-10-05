@@ -1,0 +1,12 @@
+@EndUserText.label: 'serv'
+define service ZKP_CARS_SD {
+  expose ZKP_C_CARS               as Car;
+  expose ZKP_C_CARBOOKINGS        as Booking;
+  expose /DMO/I_Customer          as Partner;
+  expose /DMO/I_Booking_Status_VH as BookingStatusVH;
+  expose I_Currency               as Currency;
+  expose ZKP_I_VH_CARS            as Brand;
+  expose ZKP_I_VH_MODELS          as Model;
+  expose ZKP_VH_ENGINES           as Engine;
+  expose ZKP_VH_MSTATUS           as Status;
+}
