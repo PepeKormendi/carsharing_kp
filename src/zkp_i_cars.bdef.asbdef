@@ -1,9 +1,10 @@
-managed;
-strict ( 2 );
+managed with additional save implementation in class zcl_cars_behave unique;
+strict;
 with draft;
 
+
 define behavior for ZKP_I_CARS alias Car
-implementation in class zcl_cars_behave unique
+
 persistent table zkp_cars
 draft table zkp_cars_d
 lock master
@@ -33,34 +34,40 @@ etag master LocalLastChangedAt
   draft action Edit;
   draft action Activate;
   draft action Discard;
+
+  determine action ValidatesBooking
+  {
+    validation Booking ~ validateDates;
+  }
+
   draft determine action Prepare
   {
     validation validatePlateNumber;
     validation validateManYear;
-    validation Booking~validateCustomer;
-    validation Booking~validateDates;
+    validation Booking ~ validateCustomer;
+    validation Booking ~ validateDates;
   }
   mapping for zkp_cars
-    {
-      CarUUID            = car_uuid;
-      PlatNum            = platenum;
-      Brand              = brand;
-      Model              = model;
-      Enginetype         = enginetype;
-      Img                = img;
-      Yearmanufact       = yearmanufact;
-      Kilometers         = kilometers;
-      Dailyprice         = dailyprice;
-      CurrencyCode       = currency_code;
-      Status             = status;
-      Numofseats         = numofseats;
-      Url                = url;
-      LastChangedAt      = last_changed_at;
-      LocalCreatedAt     = local_created_at;
-      LocalCreatedBy     = local_created_by;
-      LocalLastChangedAt = local_last_changed_at;
-      LocalLastChangedBy = local_last_changed_by;
-    }
+  {
+    CarUUID = car_uuid;
+    PlatNum = platenum;
+    Brand = brand;
+    Model = model;
+    Enginetype = enginetype;
+    Img = img;
+    Yearmanufact = yearmanufact;
+    Kilometers = kilometers;
+    Dailyprice = dailyprice;
+    CurrencyCode = currency_code;
+    Status = status;
+    Numofseats = numofseats;
+    Url = url;
+    LastChangedAt = last_changed_at;
+    LocalCreatedAt = local_created_at;
+    LocalCreatedBy = local_created_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LocalLastChangedBy = local_last_changed_by;
+  }
 
 }
 
@@ -76,8 +83,9 @@ etag master LocalLastChangedAt
   delete;
   association _Car { with draft; }
   field ( numbering : managed, readonly ) BookingUUID;
-  field ( readonly ) CarUUID, BookingID, BookingDate, LocalLastChangedAt, CurrencyCode;
+  field ( readonly ) BookPrice, CarUUID, BookingID, BookingDate, LocalLastChangedAt, CurrencyCode, CustName;
   field ( mandatory ) CustomerID, BookedFrom, BookedTo;
+
 
   // ha kiválasztunk egy partnert, akkor annak töltse be az e-mail címét egy új email mezőbe:
   //  determination setEmail on save { create; }
@@ -85,26 +93,45 @@ etag master LocalLastChangedAt
   determination setBookingNumber on save { create; }
   // ez számolja a foglalás árát a napidíj és a foglalt napok alapján
   determination calculateBookPrice on modify { create; field BookedFrom, BookedTo; }
+  // ez konvertálja az árat:
+  determination convertBookPrice on modify { create; field BookPrice, CurCodeDummy; }
   // ez állítja a bookingDate-t a system datumra
   determination setBookingDate on save { create; field BookingDate; }
 
+  determination setCustomerLink on modify {  field CustomerUuid; }
+
   determination DefaultValuesFunction on modify { create; }
   // ez nézi, hogy létező partner-e
-  validation validateCustomer on save { create; field CustomerID; }
+  validation validateCustomer on save { create; field CustomerUuid; }
   // ennek kéne nézni, hogy van-e már foglalás az adott idősávban az adott kocsira
   validation validateDates on save { create; update; field BookedFrom, BookedTo; }
+  //  validation validDate on
+  validation validateDatesBook on save {  field BookedFrom, BookedTo; }
+
+
+  determine action ValidatesBook
+  {
+    validation validateDatesBook;
+  }
+
+//  determine action CustomerLink
+//  {
+//    determination setCustomerLink;
+//  }
+
   mapping for zkp_car_bookings
-    {
-      BookingUUID        = booking_uuid;
-      BookPrice          = book_price;
-      BookedFrom         = booked_from;
-      BookedTo           = booked_to;
-      BookingDate        = booking_date;
-      BookingID          = booking_id;
-      BookingStatus      = booking_status;
-      CustomerID         = customer_id;
-      CurrencyCode       = currency_code;
-      CarUUID            = parent_uuid;
-      LocalLastChangedAt = local_last_changed_at;
-    }
+  {
+    BookingUUID = booking_uuid;
+    BookPrice = book_price;
+    BookedFrom = booked_from;
+    BookedTo = booked_to;
+    BookingDate = booking_date;
+    BookingID = booking_id;
+    BookingStatus = booking_status;
+    CustomerUuid = customer_uuid;
+    CustomerID = customer_id;
+    CurrencyCode = currency_code;
+    CarUUID = parent_uuid;
+    LocalLastChangedAt = local_last_changed_at;
+  }
 }

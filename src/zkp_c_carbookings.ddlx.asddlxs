@@ -9,34 +9,70 @@ annotate entity ZKP_C_CARBOOKINGS with
                  purpose:       #STANDARD,
                  type:          #IDENTIFICATION_REFERENCE,
                  label:         'Booking',
-                 position:      10 } ]
+                 position:      10 },
+                 { id:            'ConvertCur',
+                 targetQualifier: 'ConvCurrency',
+                purpose:       #STANDARD,
+                type:          #FIELDGROUP_REFERENCE,
+                label:         'Valutaváltás',
+                hidden: #( IsActiveEntity ),
+                position:      20
+                } ]
   @UI.hidden: true
   BookingUUID;
   @UI.hidden: true
   CarUUID;
 
   @UI: { lineItem:       [ { position: 20, importance: #HIGH } ],
-         identification: [ { position: 20 } ] }
+         identification: [ { position: 20, label: 'Foglalás id' } ] }
   BookingID;
 
   @UI: { lineItem:       [ { position: 30, importance: #HIGH } ],
-       identification: [ { position: 30 } ] }
+       identification: [ { position: 30, label: 'Foglalás dátuma' } ] }
   BookingDate;
+  @UI.textArrangement: #TEXT_ONLY
+  @UI: { lineItem:       [ { position: 40,
+                             importance: #HIGH,
+  //                             label: 'Ügyfél',
+  //                             type: #WITH_INTENT_BASED_NAVIGATION,
+  //                             semanticObject: 'ZPARTNER1',
+  //                             semanticObjectAction: 'display'
+                              type: #AS_CONTACT,
+                              label: 'Contact QuickView',
+                              value: '_CustomerNew'
+                             } ],
+         identification: [ { position: 40 , label: 'Ügyfél id',
+                                 type: #WITH_INTENT_BASED_NAVIGATION,
+                                 semanticObject: 'ZPARTNER1',
+                                 semanticObjectAction: 'display'
+          } ] }
 
-  @UI: { lineItem:       [ { position: 40, importance: #HIGH } ],
-         identification: [ { position: 40 } ] }
-  CustomerID;
+  CustomerUuid;
+  @UI: { fieldGroup: [ { qualifier: 'ConvCurrency', position: 10, label: 'Foglalás összege a választott valutában' }]  }
+  PriceInHuf;
+  @UI: { fieldGroup: [ { qualifier: 'ConvCurrency', position: 20, label: 'Választott valuta' }]  }
+  CurCodeDummy;
+
+  //  @UI: { identification: [ { position: 110, label: 'Ügyfél neve'
+  //   ,
+  //                                 type: #WITH_INTENT_BASED_NAVIGATION,
+  //                                 semanticObject: 'ZPARTNER1',
+  //                                 semanticObjectAction: 'display'
+  //                                } ]  }
+  //  CustName;
 
   @UI: { lineItem:       [ { position: 50, importance: #HIGH } ],
-       identification: [ { position: 50 } ] }
+       identification: [ { position: 50, label: 'Foglalási ár' } ] }
   BookPrice;
 
   @UI: { lineItem:       [ { position: 60, importance: #HIGH } ],
-         identification: [ { position: 60 } ] }
+         identification: [ { position: 60, label: 'Foglalás kezdete'
+  //
+          } ] }
   BookedFrom;
 
   @UI: { lineItem:       [ { position: 70, importance: #HIGH } ],
-         identification: [ { position: 70 } ] }
+         identification: [ { position: 70, label: 'Foglalás vége' } ] }
   BookedTo;
 
   @UI: { lineItem:       [ { position: 90, importance: #HIGH } ],

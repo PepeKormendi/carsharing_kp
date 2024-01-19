@@ -15,9 +15,10 @@
     <SCRTEXT_S>Motor típ.</SCRTEXT_S>
     <SCRTEXT_M>Motor típusa</SCRTEXT_M>
     <SCRTEXT_L>Motor típusa</SCRTEXT_L>
+    <ACTFLAG>I</ACTFLAG>
     <DTELMASTER>E</DTELMASTER>
+    <RESERVEDTE>JB</RESERVEDTE>
     <REFKIND>D</REFKIND>
-    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
    </DD04V>
   </asx:values>
  </asx:abap>

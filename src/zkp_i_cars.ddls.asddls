@@ -1,7 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'composite for DB cars'
 define root view entity ZKP_I_CARS
-  as select from zkp_cars
+  as select from zkp_cars as Car
   composition [0..*] of ZKP_I_CARBOOKINGS as _Booking
   association [0..1] to I_Currency        as _Currency on $projection.CurrencyCode = _Currency.Currency
   association [1..1] to ZKP_VH_ENGINES    as _Engine   on $projection.Enginetype = _Engine.value_low
@@ -25,6 +25,7 @@ define root view entity ZKP_I_CARS
       status                as Status,
       numofseats            as Numofseats,
       url                   as Url,
+      
       @Semantics.user.createdBy: true
       local_created_by      as LocalCreatedBy,
       @Semantics.systemDateTime.createdAt: true

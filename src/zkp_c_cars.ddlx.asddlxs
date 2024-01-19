@@ -2,17 +2,31 @@
 @UI: { headerInfo: { typeName: 'Car',
                      typeNamePlural: 'Cars',
                      imageUrl: 'Img',
-                    
+
                      title: { type: #STANDARD, value: 'PlatNum' } },
        presentationVariant: [{ sortOrder: [{ by: 'PlatNum', direction: #DESC }], visualizations: [{type: #AS_LINEITEM}]  }] }
 
 annotate entity ZKP_C_CARS with
 {
-  @UI.facet: [{ id:            'Car',
+  @UI.facet: [ { label: 'Car',
+                 position: 10,
+                 type: #COLLECTION,
+                 id: 'idCarColl'  },
+
+              { id:            'CarAll',
+                parentId:      'idCarColl',
                 purpose:       #STANDARD,
                 type:          #IDENTIFICATION_REFERENCE,
-                label:         'Car',
+                label:         'Car description',
                 position:      10 },
+              { targetQualifier:  'CarEditOnly',
+                parentId:      'idCarColl',
+                purpose:       #STANDARD,
+                type:          #FIELDGROUP_REFERENCE,
+                label:         'Only when Edit',
+                hidden: #( IsActiveEntity ),
+                position:      20 },
+
               { id:            'Booking',
                 purpose:       #STANDARD,
                 type:          #LINEITEM_REFERENCE,
@@ -23,13 +37,13 @@ annotate entity ZKP_C_CARS with
   @UI.hidden: true
   CarUUID;
 
-  @UI: { lineItem:       [ { position: 10, importance: #HIGH }
+  @UI: { lineItem:       [ { position: 10, importance: #HIGH, label: 'Rendszám' }
   //  ,
   //                         { type: #FOR_ACTION, dataAction: 'acceptTravel', label: 'Accept Travel' },
   //                         { type: #FOR_ACTION, dataAction: 'rejectTravel', label: 'Reject Travel' },
   //                         { type: #FOR_ACTION, dataAction: 'deductDiscount', label: 'Deduct Discount', invocationGrouping: #CHANGE_SET }
                           ],
-       identification: [ { position: 10, label: 'PlatNum' }
+       identification: [ { position: 10, label: 'Rendszám' }
   //       ,
   //                         { type: #FOR_ACTION, dataAction: 'acceptTravel', label: 'Accept Travel' },
   //                         { type: #FOR_ACTION, dataAction: 'rejectTravel', label: 'Reject Travel' },
@@ -38,11 +52,11 @@ annotate entity ZKP_C_CARS with
        selectionField: [ { position: 10 } ] }
   PlatNum;
   @UI: { lineItem:       [ { position: 20, importance: #HIGH } ] ,
-       identification: [ { position: 20 } ],
+       identification: [ { position: 20, label: 'Márka' } ],
        selectionField: [ { position: 20 } ] }
   Brand;
-  @UI: { lineItem:       [ { position: 30, importance: #HIGH } ] ,
-       identification: [ { position: 30, type: #WITH_URL, url: 'Url' } ],
+  @UI: { lineItem:       [ { position: 30, type: #WITH_URL, url: 'Url', importance: #HIGH } ] ,
+       identification: [ { position: 30, type: #WITH_URL, url: 'Url', label: 'Model' } ],
        selectionField: [ { position: 30 } ] }
   Model;
   @UI: { lineItem:       [ { position: 40, importance: #MEDIUM } ] ,
@@ -61,22 +75,23 @@ annotate entity ZKP_C_CARS with
          identification: [ { position: 70 } ] }
   Dailyprice;
 
-  @UI: { lineItem:       [ { position: 80, importance: #MEDIUM } ] ,
-         identification: [ { position: 80 } ] }
+  //  @UI: { lineItem:       [ { position: 80, importance: #MEDIUM } ] ,
+  //         fieldGroup: [{ qualifier: 'CarEditOnly', position: 10 }] }
+  @UI: { fieldGroup: [{ qualifier: 'CarEditOnly', position: 10 }] }
   @EndUserText: { label: 'Wiki url', quickInfo: 'Wikipédia url az autó típusával' }
   Url;
 
-  @UI: { lineItem:       [ { position: 90, importance: #MEDIUM } ] ,
-         identification: [ { position: 90 } ] }
+  @UI: { lineItem:       [ { position: 90, importance: #MEDIUM, label: 'ülések száma' } ] ,
+         identification: [ { position: 90, label: 'Ülések száma' } ] }
   Numofseats;
 
   @UI: { lineItem:       [ { position: 100, importance: #HIGH } ] ,
-         identification: [ { position: 100, label: 'Status' } ],
+         identification: [ { position: 100, label: 'Státusz' } ],
          selectionField: [{ position: 40 }],
          textArrangement: #TEXT_ONLY }
   Status;
 
-  @UI: { identification: [ { position: 110 } ] }
+  @UI: { fieldGroup: [{ qualifier: 'CarEditOnly', position: 20 }] }
   @EndUserText: { label: 'Kép url', quickInfo: 'Url az autó képével' }
   Img;
 

@@ -4,9 +4,9 @@
 @Search.searchable: true
 @ObjectModel.semanticKey: ['PlatNum']
 
-define root view entity ZKP_C_CARS
+define root view entity ZKP_C_CARS 
   provider contract transactional_query
-  as projection on ZKP_I_CARS
+  as projection on ZKP_I_CARS as Car
 {
   key CarUUID,
       @Search.defaultSearchElement: true
@@ -19,7 +19,7 @@ define root view entity ZKP_C_CARS
       @Consumption.valueHelpDefinition: [{ entity: {name: 'ZKP_I_VH_MODELS' , element: 'Model' }, distinctValues: true }]
       Model,
       @ObjectModel.text.element: ['EngineName']
-      @Consumption.valueHelpDefinition: [{ entity: {name: 'ZKP_VH_ENGINES' , element: 'value_low' }, distinctValues: true }]
+      @Consumption.valueHelpDefinition: [{ entity: {name: 'ZKP_VH_ENGINES' , element: 'Enginetype' }, distinctValues: true }]
       Enginetype,
       _Engine.text  as EngineName,
 //      @Semantics.imageUrl: true

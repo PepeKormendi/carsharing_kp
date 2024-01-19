@@ -1,5 +1,5 @@
 projection;
-strict ( 2 );
+strict;
 use draft;
 
 define behavior for ZKP_C_CARS alias Car
@@ -13,6 +13,7 @@ define behavior for ZKP_C_CARS alias Car
   use action Activate;
   use action Discard;
   use action Prepare;
+  use action ValidatesBooking;
 
   use association _Booking { create; with draft; }
 }
@@ -21,6 +22,6 @@ define behavior for ZKP_C_CARBOOKINGS alias Booking
 {
   use update;
   use delete;
-
+  use action ValidatesBook;
   use association _Car { with draft; }
 }

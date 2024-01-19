@@ -1,0 +1,14 @@
+@EndUserText.label: 'Service definition Autókölcsönzéshez'
+define service ZKP_CARS_BOOKING_SD {
+  expose ZKP_C_CARS as Car;
+  expose ZKP_C_CARBOOKINGS as Booking;
+  expose /DMO/I_Customer as Partner;
+  expose ZSZAKD_I_CUSTOMER as Customer;
+  expose I_Currency as Currency;
+  expose ZKP_I_VH_CARS as Brand;
+  expose ZKP_I_VH_MODELS as Model;
+  expose ZKP_VH_ENGINES as Engine;
+  expose ZKP_VH_MSTATUS as Status;
+  expose ZSZAKD_C_CUR_EX as Currexch;
+  expose ZSZAKD_I_CUR_EX as Curexvh;
+}

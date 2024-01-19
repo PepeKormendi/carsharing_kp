@@ -4,9 +4,9 @@
   <asx:values>
    <SRVB>
     <METADATA>
-     <NAME>ZKP_CARS_SB</NAME>
+     <NAME>ZKP_CARS_BOOK_V4</NAME>
      <TYPE>SRVB/SVB</TYPE>
-     <DESCRIPTION>Service Binding Autókölcsönzéshez</DESCRIPTION>
+     <DESCRIPTION>Odata V4 version</DESCRIPTION>
      <LINKS>
       <item>
        <HREF>versions</HREF>
@@ -14,10 +14,10 @@
        <TITLE>Historic versions</TITLE>
       </item>
       <item>
-       <HREF>/sap/bc/adt/businessservices/odatav2/ZKP_CARS_SB</HREF>
-       <REL>http://www.sap.com/categories/odatav2</REL>
-       <TYPE>application/vnd.sap.adt.businessservices.odatav2.v2+xml</TYPE>
-       <TITLE>ODATAV2</TITLE>
+       <HREF>/sap/bc/adt/businessservices/odatav4/ZKP_CARS_BOOK_V4</HREF>
+       <REL>http://www.sap.com/categories/odatav4</REL>
+       <TYPE>application/vnd.sap.adt.businessservices.odatav4.v1+xml</TYPE>
+       <TITLE>ODATAV4</TITLE>
       </item>
       <item>
        <HREF>/sap/bc/adt/businessservices/testclass</HREF>
@@ -37,16 +37,18 @@
     </METADATA>
     <CONTENT>
      <BIND_TYPE_IMPL>
-      <NAME>ZKP_CARS_SB</NAME>
+      <NAME>ZKP_CARS_BOOK_V4</NAME>
      </BIND_TYPE_IMPL>
      <BIND_TYPE>ODATA</BIND_TYPE>
-     <BIND_TYPE_VERSION>V2</BIND_TYPE_VERSION>
+     <BIND_TYPE_CATEGORY>1</BIND_TYPE_CATEGORY>
+     <BIND_TYPE_VERSION>V4</BIND_TYPE_VERSION>
      <SERVICES>
       <item>
-       <SERVICE_NAME>ZKP_CARS_SB</SERVICE_NAME>
+       <SERVICE_NAME>ZKP_CARS_BOOKING_SD</SERVICE_NAME>
        <SERVICE_CONTENT>
         <item>
          <SERVICE_VERSION>0001</SERVICE_VERSION>
+         <RELEASE_STATE>NOT_RELEASED</RELEASE_STATE>
          <SRVD_REF>
           <URI>/sap/bc/adt/ddic/srvd/sources/zkp_cars_booking_sd</URI>
           <TYPE>SRVD/SRV</TYPE>
@@ -57,6 +59,8 @@
       </item>
      </SERVICES>
     </CONTENT>
+    <CONTRACT>C2</CONTRACT>
+    <RELEASE_SUPPORTED>true</RELEASE_SUPPORTED>
     <PUBLISHED>true</PUBLISHED>
     <BINDING_CREATED>true</BINDING_CREATED>
    </SRVB>
